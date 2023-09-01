@@ -1,12 +1,14 @@
 package br.edu.irati.ifpr.tads.entity;
 
 public class Curso {
+    private int id;
     private String nome;
     private String turno;
 
     public Curso() {
         nome = "";
         turno = "";
+        id = 0;
     }
 
     public Curso(String nome, String turno) {
@@ -28,5 +30,19 @@ public class Curso {
 
     public void setTurno(String turno) {
         this.turno = turno;
+    }
+
+    /**
+     * @return the id
+     */
+    public int getId() {
+        return id;
+    }
+
+    /**
+     * @param id the id to set
+     */
+    public void setId(int id) {
+        this.id = id;
     }
 }
