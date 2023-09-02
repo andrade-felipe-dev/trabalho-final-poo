@@ -11,7 +11,8 @@ public class Curso {
         id = 0;
     }
 
-    public Curso(String nome, String turno) {
+    public Curso(int id, String nome, String turno) {
+        this.id = id;
         this.nome = nome;
         this.turno = turno;
     }

@@ -4,6 +4,7 @@ import br.edu.irati.ifpr.tads.entity.Curso;
 import br.edu.irati.tads.exception.PersistenceException;
 import java.util.List;
 import java.sql.*;
+import java.util.ArrayList;
 
 public class CursoDAO implements InterfaceDAO<Curso>{
     private Connection connection;
@@ -55,12 +56,20 @@ public class CursoDAO implements InterfaceDAO<Curso>{
     @Override
     public Curso buscarPorId(int id) throws PersistenceException {
         try {
-            PreparedStatement ps = this.connection.prepareStatement("SELECT nome, turno WHERE id = ?");
+            PreparedStatement ps = this.connection.prepareStatement("SELECT id, nome, turno FROM cursos WHERE id = ?");
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
+            Curso curso = null;
             if (rs.next()) {
-                
+                id = rs.getInt(1);
+                String nome = rs.getString(2);
+                String turno = rs.getString(3);
+                curso = new Curso(id, nome, turno);
             }
+            rs.close();
+            ps.close();
+                
+            return curso;
         } catch (SQLException ex) {
             throw new PersistenceException(ex.getMessage());
         }
@@ -68,7 +77,24 @@ public class CursoDAO implements InterfaceDAO<Curso>{
 
     @Override
     public List<Curso> buscarTodos() throws PersistenceException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        try {
+            PreparedStatement ps = this.connection.prepareStatement("SELECT id, nome, turno FROM cursos;");
+            ResultSet rs = ps.executeQuery();
+            
+            List<Curso> cursos = new ArrayList<>();
+            
+            while(rs.next()){
+                int id = rs.getInt(1);
+                String nome = rs.getString(2);
+                String turno = rs.getString(3);
+                Curso curso = new Curso(id, nome, turno);
+                
+                cursos.add(curso);
+            }
+            
+            return cursos;
+        } catch (SQLException e) {
+            throw new PersistenceException(e.getMessage());
+        }
     }
-    
 }
