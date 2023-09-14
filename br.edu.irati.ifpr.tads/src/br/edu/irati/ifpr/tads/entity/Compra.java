@@ -1,27 +1,39 @@
 package br.edu.irati.ifpr.tads.entity;
 
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 public class Compra {
+    private int id;    
     private Date dataHora;
     private String estado;
-    private List<Cliente> listaClientes;
-    private ItemCompra itemCompra;
+    private Cliente cliente;
+    private List<ItemCompra> listaItemCompra;
     
     public Compra() {
+        id = 0;
         dataHora = new Date();
         estado = "";
-        listaClientes = new ArrayList<>();
-        itemCompra = new ItemCompra();
+        cliente = new Cliente();
+        listaItemCompra = new ArrayList<>();
     }
     
-    public Compra(Date dataHora, String estado, List<Cliente> listaClientes, ItemCompra itemCompra) {
+    public Compra(int id, Date dataHora, String estado, Cliente cliente, List<ItemCompra> listaItemCompra) {
+        this.id = id;
         this.dataHora = dataHora;
         this.estado = estado;
-        this.listaClientes = listaClientes;
-        this.itemCompra = itemCompra;
+        this.cliente = cliente;
+        this.listaItemCompra = listaItemCompra;
+    }
+    
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public Date getDataHora() {
@@ -39,21 +51,21 @@ public class Compra {
     public void setEstado(String estado) {
         this.estado = estado;
     }
-    
-    public List<Cliente> getListaClientes() {
-        return listaClientes;
+
+    public Cliente getCliente() {
+        return cliente;
     }
 
-    public void setListaClientes(List<Cliente> listaClientes) {
-        this.listaClientes = listaClientes;
-    }
-    
-    public ItemCompra getItemCompra() {
-        return itemCompra;
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
     }
 
-    public void setItemCompra(ItemCompra itemCompra) {
-        this.itemCompra = itemCompra;
+    public List<ItemCompra> getListaItemCompra() {
+        return listaItemCompra;
+    }
+
+    public void setListaItemCompra(List<ItemCompra> listaItemCompra) {
+        this.listaItemCompra = listaItemCompra;
     }
 
 }

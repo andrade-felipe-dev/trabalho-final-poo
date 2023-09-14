@@ -1,38 +1,35 @@
 package br.edu.irati.ifpr.tads.entity;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class Pagamento {
+    private int id;
     private double valor;
     private Date dataHora;
     private String formaPagamento;
     private Cliente cliente;
-    private Compra compra;
+    private List<Compra> listaCompras;
 
     public Pagamento() {
+        id = 0;
         valor = 0;
         dataHora = new Date();
         formaPagamento = "";
         cliente = new Cliente();
-        compra = new Compra();
+        listaCompras = new ArrayList<>();
     }
 
-    public Pagamento(double valor, Date dataHora, String formaPagamento, Cliente cliente, Compra compra) {
+    public Pagamento(int id, double valor, Date dataHora, String formaPagamento, Cliente cliente, List<Compra> listaCompras) {
+        this.id = id;
         this.valor = valor;
         this.dataHora = dataHora;
         this.formaPagamento = formaPagamento;
         this.cliente = cliente;
-        this.compra = compra;
+        this.listaCompras = listaCompras;
     }
 
-    public Compra getCompra() {
-        return compra;
-    }
-
-    public void setCompra(Compra compra) {
-        this.compra = compra;
-    }
-    
     public double getValor() {
         return valor;
     }
@@ -63,5 +60,21 @@ public class Pagamento {
 
     public void setCliente(Cliente cliente) {
         this.cliente = cliente;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public List<Compra> getListaCompras() {
+        return listaCompras;
+    }
+
+    public void setListaCompras(List<Compra> listaCompras) {
+        this.listaCompras = listaCompras;
     }
 }

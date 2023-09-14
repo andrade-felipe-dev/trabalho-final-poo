@@ -4,42 +4,45 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Cliente {
+    private int id;
     private String nome;
     private String telefone;
     private String email;
     private float saldoAtual;
     private float limiteFiado;
-    private List<Pagamento> pagamentos;
-    private List<Curso> listaCursos;
+    private List<Pagamento> listaPagamentos;
+    private Curso curso;
 
     public Cliente() {
+        id = 0;
         nome = "";
         telefone = "";
         email = "";
         saldoAtual = 0;
         limiteFiado = 0;
-        pagamentos = new ArrayList<>();
-        listaCursos = new ArrayList<>();
+        listaPagamentos = new ArrayList<>();
+        curso = new Curso();
     }
 
-    public Cliente(String nome, String telefone, String email, float saldoAtual, float limiteFiado, List<Pagamento> pagamentos, List<Curso> listaCursos) {
+    public Cliente(int id, String nome, String telefone, String email, float saldoAtual, float limiteFiado,List<Pagamento> listaPagamentos, Curso curso) {
+        this.id = id;
         this.nome = nome;
         this.telefone = telefone;
         this.email = email;
         this.saldoAtual = saldoAtual;
         this.limiteFiado = limiteFiado;
-        this.pagamentos = pagamentos;
-        this.listaCursos = listaCursos;
-    }
-
-    public List<Pagamento> pagamentos() {
-        return pagamentos;
-    }
-
-    public void setPagamentos(List<Pagamento> pagamentos) {
-        this.pagamentos = pagamentos;
+        this.listaPagamentos = listaPagamentos;
+        this.curso = curso;
     }
     
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public String getNome() {
         return nome;
     }
@@ -78,13 +81,21 @@ public class Cliente {
 
     public void setLimiteFiado(float limiteFiado) {
         this.limiteFiado = limiteFiado;
-    }
-    
-    public List<Curso> getListaCursos() {
-        return listaCursos;
+    } 
+
+    public Curso getCurso() {
+        return curso;
     }
 
-    public void setListaCursos(List<Curso> listaCursos) {
-        this.listaCursos = listaCursos;
-    }    
+    public void setCurso(Curso curso) {
+        this.curso = curso;
+    }
+
+    public List<Pagamento> getListaPagamentos() {
+        return listaPagamentos;
+    }
+
+    public void setListaPagamentos(List<Pagamento> listaPagamentos) {
+        this.listaPagamentos = listaPagamentos;
+    }
 }

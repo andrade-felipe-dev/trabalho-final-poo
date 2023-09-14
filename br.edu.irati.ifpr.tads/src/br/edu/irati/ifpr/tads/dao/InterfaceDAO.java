@@ -1,6 +1,6 @@
-package br.edu.irati.tads.dao;
+package br.edu.irati.ifpr.tads.dao;
 
-import br.edu.irati.tads.exception.PersistenceException;
+import br.edu.irati.ifpr.tads.exception.PersistenceException;
 import java.util.List;
 
 public interface InterfaceDAO <T> {

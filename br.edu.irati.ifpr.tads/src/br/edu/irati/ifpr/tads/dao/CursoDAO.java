@@ -1,13 +1,13 @@
-package br.edu.irati.tads.dao;
+package br.edu.irati.ifpr.tads.dao;
 
 import br.edu.irati.ifpr.tads.entity.Curso;
-import br.edu.irati.tads.exception.PersistenceException;
+import br.edu.irati.ifpr.tads.exception.PersistenceException;
 import java.util.List;
 import java.sql.*;
 import java.util.ArrayList;
 
 public class CursoDAO implements InterfaceDAO<Curso>{
-    private Connection connection;
+    private final Connection connection;
 
     public CursoDAO(Connection connection) {
         this.connection = connection;
@@ -49,8 +49,7 @@ public class CursoDAO implements InterfaceDAO<Curso>{
             ps.close();
         } catch (SQLException ex) {
             throw new PersistenceException(ex.getMessage());
-        }
-        
+        }   
     }
 
     @Override
@@ -59,12 +58,14 @@ public class CursoDAO implements InterfaceDAO<Curso>{
             PreparedStatement ps = this.connection.prepareStatement("SELECT id, nome, turno FROM cursos WHERE id = ?");
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
-            Curso curso = null;
+            Curso curso = new Curso();
             if (rs.next()) {
                 id = rs.getInt(1);
                 String nome = rs.getString(2);
                 String turno = rs.getString(3);
-                curso = new Curso(id, nome, turno);
+                curso.setId(id);
+                curso.setNome(nome);
+                curso.setTurno(turno);
             }
             rs.close();
             ps.close();
@@ -91,6 +92,8 @@ public class CursoDAO implements InterfaceDAO<Curso>{
                 
                 cursos.add(curso);
             }
+            rs.close();
+            ps.close();
             
             return cursos;
         } catch (SQLException e) {

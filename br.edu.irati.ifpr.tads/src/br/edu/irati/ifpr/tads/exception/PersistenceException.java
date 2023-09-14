@@ -1,4 +1,4 @@
-package br.edu.irati.tads.exception;
+package br.edu.irati.ifpr.tads.exception;
 
 public class PersistenceException extends Exception {
     public PersistenceException(String message) {
