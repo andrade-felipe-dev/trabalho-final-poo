@@ -1,6 +1,6 @@
 package br.edu.irati.ifpr.tads.dao;
 
-import br.edu.irati.ifpr.tads.entity.Produto;
+import br.edu.irati.ifpr.tads.model.Produto;
 import br.edu.irati.ifpr.tads.exception.PersistenceException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;

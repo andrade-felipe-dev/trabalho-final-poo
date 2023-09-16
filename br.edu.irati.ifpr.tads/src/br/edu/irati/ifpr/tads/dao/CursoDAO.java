@@ -1,6 +1,6 @@
 package br.edu.irati.ifpr.tads.dao;
 
-import br.edu.irati.ifpr.tads.entity.Curso;
+import br.edu.irati.ifpr.tads.model.Curso;
 import br.edu.irati.ifpr.tads.exception.PersistenceException;
 import java.util.List;
 import java.sql.*;

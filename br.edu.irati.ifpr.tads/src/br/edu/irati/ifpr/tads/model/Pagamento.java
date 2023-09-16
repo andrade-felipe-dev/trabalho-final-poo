@@ -1,4 +1,4 @@
-package br.edu.irati.ifpr.tads.entity;
+package br.edu.irati.ifpr.tads.model;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -8,7 +8,7 @@ public class Pagamento {
     private int id;
     private double valor;
     private Date dataHora;
-    private String formaPagamento;
+    private PagamentoFormaENUM formaPagamento;
     private Cliente cliente;
     private List<Compra> listaCompras;
 
@@ -16,12 +16,12 @@ public class Pagamento {
         id = 0;
         valor = 0;
         dataHora = new Date();
-        formaPagamento = "";
+        formaPagamento = PagamentoFormaENUM.DINHEIRO;
         cliente = new Cliente();
         listaCompras = new ArrayList<>();
     }
 
-    public Pagamento(int id, double valor, Date dataHora, String formaPagamento, Cliente cliente, List<Compra> listaCompras) {
+    public Pagamento(int id, double valor, Date dataHora, PagamentoFormaENUM formaPagamento, Cliente cliente, List<Compra> listaCompras) {
         this.id = id;
         this.valor = valor;
         this.dataHora = dataHora;
@@ -46,11 +46,11 @@ public class Pagamento {
         this.dataHora = dataHora;
     }
 
-    public String getFormaPagamento() {
+    public PagamentoFormaENUM getFormaPagamento() {
         return formaPagamento;
     }
 
-    public void setFormaPagamento(String formaPagamento) {
+    public void setFormaPagamento(PagamentoFormaENUM formaPagamento) {
         this.formaPagamento = formaPagamento;
     }
     

@@ -1,4 +1,4 @@
-package br.edu.irati.ifpr.tads.entity;
+package br.edu.irati.ifpr.tads.model;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,6 +8,7 @@ public class Cliente {
     private String nome;
     private String telefone;
     private String email;
+    private String endereco;
     private float saldoAtual;
     private float limiteFiado;
     private List<Pagamento> listaPagamentos;
@@ -18,17 +19,19 @@ public class Cliente {
         nome = "";
         telefone = "";
         email = "";
+        endereco = "";
         saldoAtual = 0;
         limiteFiado = 0;
         listaPagamentos = new ArrayList<>();
         curso = new Curso();
     }
 
-    public Cliente(int id, String nome, String telefone, String email, float saldoAtual, float limiteFiado,List<Pagamento> listaPagamentos, Curso curso) {
+    public Cliente(int id, String nome, String telefone, String email, String endereco, float saldoAtual, float limiteFiado,List<Pagamento> listaPagamentos, Curso curso) {
         this.id = id;
         this.nome = nome;
         this.telefone = telefone;
         this.email = email;
+        this.endereco = endereco;
         this.saldoAtual = saldoAtual;
         this.limiteFiado = limiteFiado;
         this.listaPagamentos = listaPagamentos;
@@ -97,5 +100,13 @@ public class Cliente {
 
     public void setListaPagamentos(List<Pagamento> listaPagamentos) {
         this.listaPagamentos = listaPagamentos;
+    }
+
+    public String getEndereco() {
+        return endereco;
+    }
+
+    public void setEndereco(String endereco) {
+        this.endereco = endereco;
     }
 }

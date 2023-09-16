@@ -1,4 +1,4 @@
-package br.edu.irati.ifpr.tads.entity;
+package br.edu.irati.ifpr.tads.model;
 
 
 import java.util.ArrayList;
@@ -8,19 +8,19 @@ import java.util.List;
 public class Compra {
     private int id;    
     private Date dataHora;
-    private String estado;
+    private CompraEstadoENUM estado;
     private Cliente cliente;
     private List<ItemCompra> listaItemCompra;
     
     public Compra() {
         id = 0;
         dataHora = new Date();
-        estado = "";
+        estado = CompraEstadoENUM.PENDENTE;
         cliente = new Cliente();
         listaItemCompra = new ArrayList<>();
     }
     
-    public Compra(int id, Date dataHora, String estado, Cliente cliente, List<ItemCompra> listaItemCompra) {
+    public Compra(int id, Date dataHora, CompraEstadoENUM estado, Cliente cliente, List<ItemCompra> listaItemCompra) {
         this.id = id;
         this.dataHora = dataHora;
         this.estado = estado;
@@ -44,11 +44,11 @@ public class Compra {
         this.dataHora = dataHora;
     }
 
-    public String getEstado() {
+    public CompraEstadoENUM getEstado() {
         return estado;
     }
 
-    public void setEstado(String estado) {
+    public void setEstado(CompraEstadoENUM estado) {
         this.estado = estado;
     }
 

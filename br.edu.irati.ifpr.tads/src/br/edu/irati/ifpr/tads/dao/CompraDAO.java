@@ -1,9 +1,10 @@
 package br.edu.irati.ifpr.tads.dao;
 
-import br.edu.irati.ifpr.tads.entity.Compra;
+import br.edu.irati.ifpr.tads.model.Compra;
 import br.edu.irati.ifpr.tads.exception.PersistenceException;
-import br.edu.irati.ifpr.tads.entity.Cliente;
-import br.edu.irati.ifpr.tads.entity.Pagamento;
+import br.edu.irati.ifpr.tads.model.Cliente;
+import br.edu.irati.ifpr.tads.model.CompraEstadoENUM;
+import br.edu.irati.ifpr.tads.model.Pagamento;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -11,7 +12,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CompraDAO implements InterfaceDAO<Compra> {
+public class CompraDAO {
     private final Connection con;
     
     public CompraDAO(Connection con) {
@@ -21,9 +22,9 @@ public class CompraDAO implements InterfaceDAO<Compra> {
     public void salvar(Compra t) throws PersistenceException {
         try {
             if(t.getId() == 0) {
-                PreparedStatement ps = this.con.prepareStatement("INSERT INTO compras (data_hora, estado, id_cliente) VALUES(?,?);", PreparedStatement.RETURN_GENERATED_KEYS);
+                PreparedStatement ps = this.con.prepareStatement("INSERT INTO compras (data_hora, estado, id_cliente) VALUES(?,?,?);", PreparedStatement.RETURN_GENERATED_KEYS);
                 ps.setDate(1, new java.sql.Date(t.getDataHora().getTime()));
-                ps.setString(2, t.getEstado());
+                ps.setString(2, t.getEstado().toString());
                 ps.setInt(3, t.getCliente().getId());
                 ps.execute();
 
@@ -36,7 +37,7 @@ public class CompraDAO implements InterfaceDAO<Compra> {
             } else {
                 PreparedStatement ps = this.con.prepareStatement("UPDATE compras SET data_hora = ?, estado = ? WHERE id = ?;");
                 ps.setDate(1, new java.sql.Date(t.getDataHora().getTime()));
-                ps.setString(2, t.getEstado());
+                ps.setString(2, t.getEstado().toString());
                 ps.setInt(3, t.getId());
                 ps.execute();
                 ps.close();
@@ -72,7 +73,7 @@ public class CompraDAO implements InterfaceDAO<Compra> {
                 Cliente cliente = clienteDAO.buscarPorId(rs.getInt(4));
                 compra.setId(id);
                 compra.setDataHora(dataHora);
-                compra.setEstado(estado);
+                compra.setEstado(estado.equals(CompraEstadoENUM.PENDENTE) ? CompraEstadoENUM.PENDENTE : CompraEstadoENUM.PAGO);
                 compra.setCliente(cliente);
             }
             rs.close();
@@ -98,7 +99,7 @@ public class CompraDAO implements InterfaceDAO<Compra> {
                 Cliente cliente = clienteDAO.buscarPorId(rs.getInt(4));
                 compra.setId(id);
                 compra.setDataHora(dataHora);
-                compra.setEstado(estado);
+                compra.setEstado(estado.equals(CompraEstadoENUM.PENDENTE) ? CompraEstadoENUM.PENDENTE : CompraEstadoENUM.PAGO);
                 compra.setCliente(cliente);
                 
                 listaCompras.add(compra);
@@ -126,8 +127,8 @@ public class CompraDAO implements InterfaceDAO<Compra> {
                 ClienteDAO clienteDAO = new ClienteDAO(con);
                 Cliente cliente = clienteDAO.buscarPorId(rs.getInt(4));
                 compra.setId(id);
-                compra.setDataHora(dataHora);
-                compra.setEstado(estado);
+                compra.setDataHora(dataHora);                
+                compra.setEstado(estado.equals(CompraEstadoENUM.PENDENTE) ? CompraEstadoENUM.PENDENTE : CompraEstadoENUM.PAGO);
                 compra.setCliente(cliente);
                 
                 listaCompra.add(compra);

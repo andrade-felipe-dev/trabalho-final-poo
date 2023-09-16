@@ -1,8 +1,8 @@
 package br.edu.irati.ifpr.tads.dao;
 
-import br.edu.irati.ifpr.tads.entity.Compra;
-import br.edu.irati.ifpr.tads.entity.ItemCompra;
-import br.edu.irati.ifpr.tads.entity.Produto;
+import br.edu.irati.ifpr.tads.model.Compra;
+import br.edu.irati.ifpr.tads.model.ItemCompra;
+import br.edu.irati.ifpr.tads.model.Produto;
 import br.edu.irati.ifpr.tads.exception.PersistenceException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -20,9 +20,10 @@ public class ItemCompraDAO {
    
     public void salvar(Compra compra, ItemCompra itemCompra) throws PersistenceException {
         try {
-            PreparedStatement ps = this.con.prepareStatement("INSERT INTO item_compra (id_compra, id_produto) VALUES(?,?);", PreparedStatement.RETURN_GENERATED_KEYS);
-            ps.setInt(1, compra.getId());
-            ps.setInt(2, itemCompra.getProduto().getId());
+            PreparedStatement ps = this.con.prepareStatement("INSERT INTO item_compras (preco, id_compra, id_produto) VALUES(?,?,?);", PreparedStatement.RETURN_GENERATED_KEYS);
+            ps.setDouble(1, itemCompra.getPreco());
+            ps.setInt(2, compra.getId());
+            ps.setInt(3, itemCompra.getProduto().getId());
             ps.execute();
 
             ResultSet rs = ps.getGeneratedKeys();

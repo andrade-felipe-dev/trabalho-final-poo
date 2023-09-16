@@ -1,4 +1,4 @@
-package br.edu.irati.ifpr.tads.entity;
+package br.edu.irati.ifpr.tads.model;
 
 public class Curso {
     private int id;

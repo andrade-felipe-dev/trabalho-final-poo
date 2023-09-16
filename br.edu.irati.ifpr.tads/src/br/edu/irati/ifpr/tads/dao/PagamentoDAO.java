@@ -1,8 +1,9 @@
 package br.edu.irati.ifpr.tads.dao;
 
-import br.edu.irati.ifpr.tads.entity.Cliente;
-import br.edu.irati.ifpr.tads.entity.Pagamento;
+import br.edu.irati.ifpr.tads.model.Cliente;
+import br.edu.irati.ifpr.tads.model.Pagamento;
 import br.edu.irati.ifpr.tads.exception.PersistenceException;
+import br.edu.irati.ifpr.tads.model.PagamentoFormaENUM;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -20,9 +21,9 @@ public class PagamentoDAO implements InterfaceDAO<Pagamento>{
     public void salvar(Pagamento t) throws PersistenceException {
         try {
             if(t.getId() == 0) {
-                PreparedStatement ps = this.con.prepareStatement("INSERT INTO pagamentos(data_hora, forma_pagamento, id_cliente);", PreparedStatement.RETURN_GENERATED_KEYS);
+                PreparedStatement ps = this.con.prepareStatement("INSERT INTO pagamentos(data_hora, forma_pagamento, id_cliente) values (?,?,?);", PreparedStatement.RETURN_GENERATED_KEYS);
                 ps.setDate(1, new java.sql.Date(t.getDataHora().getTime()));
-                ps.setString(2, t.getFormaPagamento());
+                ps.setString(2, t.getFormaPagamento().toString());
                 ps.setInt(3, t.getCliente().getId());
                 ps.execute();
                 ResultSet rs = ps.getGeneratedKeys();
@@ -34,7 +35,7 @@ public class PagamentoDAO implements InterfaceDAO<Pagamento>{
             } else {
                 PreparedStatement ps = this.con.prepareStatement("UPDATE pagamentos set data_hora = ?, forma_pagamento = ?, id_cliente = ? WHERE id = ?;");
                 ps.setDate(1, new java.sql.Date(t.getDataHora().getTime()));
-                ps.setString(2, t.getFormaPagamento());
+                ps.setString(2, t.getFormaPagamento().toString());
                 ps.setInt(3, t.getCliente().getId());
                 ps.setInt(4, t.getId());
                 ps.execute();
@@ -72,7 +73,7 @@ public class PagamentoDAO implements InterfaceDAO<Pagamento>{
                 Cliente cliente = clienteDAO.buscarPorId(rs.getInt(4));
                 pagamento.setId(id);
                 pagamento.setDataHora(dataHora);
-                pagamento.setFormaPagamento(formaPagamento);
+                pagamento.setFormaPagamento(getFormaPagamento(formaPagamento));
                 pagamento.setCliente(cliente);
             }
             rs.close();
@@ -99,7 +100,7 @@ public class PagamentoDAO implements InterfaceDAO<Pagamento>{
                 Cliente cliente = clienteDAO.buscarPorId(rs.getInt(4));
                 pagamento.setId(id);
                 pagamento.setDataHora(dataHora);
-                pagamento.setFormaPagamento(formaPagamento);
+                pagamento.setFormaPagamento(getFormaPagamento(formaPagamento));
                 pagamento.setCliente(cliente);
                 
                 listaPagamentos.add(pagamento);
@@ -113,5 +114,16 @@ public class PagamentoDAO implements InterfaceDAO<Pagamento>{
         }
     }
     
-    
+    private PagamentoFormaENUM getFormaPagamento(String formaPagamento) {
+        switch (formaPagamento) {
+            case "DINHEIRO":
+                return PagamentoFormaENUM.DINHEIRO;
+            case "PIX":
+                return PagamentoFormaENUM.PIX;
+            case "CARTAO":
+                return PagamentoFormaENUM.CARTAO;
+        }
+        
+        return PagamentoFormaENUM.DINHEIRO;
+    }
 }
