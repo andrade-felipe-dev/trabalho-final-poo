@@ -22,22 +22,29 @@ public class ClienteController {
         
         cliente.setCurso(curso);
         clienteDAO.salvar(cliente);
+        Conectar.offConection(con);
     }
     
     public List<Cliente> listarTodos() throws PersistenceException {
-        ClienteDAO clienteDAO = new ClienteDAO(Conectar.get());
+        Connection con = Conectar.get();
+        ClienteDAO clienteDAO = new ClienteDAO(con);
         List<Cliente> listaClientes = clienteDAO.buscarTodos();
+        Conectar.offConection(con);
         return listaClientes;
     }
     
     public Cliente buscarPorId(int id) throws PersistenceException {
-        ClienteDAO clienteDAO = new ClienteDAO(Conectar.get());
+        Connection con = Conectar.get();
+        ClienteDAO clienteDAO = new ClienteDAO(con);
         Cliente cliente = clienteDAO.buscarPorId(id);
+        Conectar.offConection(con);
         return cliente;
     }
     
     public void excluir(Cliente cliente) throws PersistenceException {
-        ClienteDAO clienteDAO = new ClienteDAO(Conectar.get());
+        Connection con = Conectar.get();
+        ClienteDAO clienteDAO = new ClienteDAO(con);
         clienteDAO.excluir(cliente);
+        Conectar.offConection(con);
     }
 }

@@ -6,14 +6,13 @@ import java.util.List;
 import java.sql.*;
 import java.util.ArrayList;
 
-public class CursoDAO implements InterfaceDAO<Curso>{
+public class CursoDAO {
     private final Connection connection;
 
     public CursoDAO(Connection connection) {
         this.connection = connection;
     }
     
-    @Override
     public void salvar(Curso t) throws PersistenceException {
         try {
             if (t.getId() == 0) {
@@ -40,7 +39,6 @@ public class CursoDAO implements InterfaceDAO<Curso>{
         }
     }
 
-    @Override
     public void excluir(Curso t) throws PersistenceException {
         try {
             PreparedStatement ps = this.connection.prepareStatement("DELETE FROM cursos WHERE id = ?");
@@ -52,7 +50,6 @@ public class CursoDAO implements InterfaceDAO<Curso>{
         }   
     }
 
-    @Override
     public Curso buscarPorId(int id) throws PersistenceException {
         try {
             PreparedStatement ps = this.connection.prepareStatement("SELECT id, nome, turno FROM cursos WHERE id = ?");
@@ -75,8 +72,30 @@ public class CursoDAO implements InterfaceDAO<Curso>{
             throw new PersistenceException(ex.getMessage());
         }
     }
+    
+    public Curso buscarPorNome(String nome) throws PersistenceException {
+        try {
+            PreparedStatement ps = this.connection.prepareStatement("SELECT id, nome, turno FROM cursos WHERE nome = ?");
+            ps.setString(1, nome);
+            ResultSet rs = ps.executeQuery();
+            Curso curso = new Curso();
+            if (rs.next()) {
+                int id = rs.getInt(1);
+                nome = rs.getString(2);
+                String turno = rs.getString(3);
+                curso.setId(id);
+                curso.setNome(nome);
+                curso.setTurno(turno);
+            }
+            rs.close();
+            ps.close();
+                
+            return curso;
+        } catch (SQLException ex) {
+            throw new PersistenceException(ex.getMessage());
+        }
+    }
 
-    @Override
     public List<Curso> buscarTodos() throws PersistenceException {
         try {
             PreparedStatement ps = this.connection.prepareStatement("SELECT id, nome, turno FROM cursos;");
