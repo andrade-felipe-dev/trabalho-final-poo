@@ -21,7 +21,6 @@ public class GerenciarClienteGUI extends javax.swing.JFrame {
     public GerenciarClienteGUI() {
         initComponents();
         clienteAtual = new Cliente();
-        
         this.atualizarTela();
     }
     
@@ -41,10 +40,10 @@ public class GerenciarClienteGUI extends javax.swing.JFrame {
             CursoController cursoController = new CursoController();
             List<Curso> listaCurso = cursoController.listarTodos();
             List<String> listaNome = cursoController.formatarCursoNome(listaCurso);
-            
             DefaultComboBoxModel model = new DefaultComboBoxModel(listaNome.toArray());
             
             jComboBoxCurso.setModel(model);
+            jComboBoxCurso.setSelectedIndex(listaNome.indexOf(this.clienteAtual.getCurso().getNome()));
         } catch (PersistenceException ex) {
             JOptionPane.showMessageDialog(null, "Cheguei");
 
@@ -56,7 +55,6 @@ public class GerenciarClienteGUI extends javax.swing.JFrame {
         try {
             ClienteController clienteController = new ClienteController();
             this.listaClientes = clienteController.listarTodos();
-            System.out.println(this.listaClientes);
         } catch (PersistenceException ex) {
             JOptionPane.showMessageDialog(null, "Não foi possível acessar o banco de dados.");
         }
@@ -118,6 +116,7 @@ public class GerenciarClienteGUI extends javax.swing.JFrame {
         jTableGerenciarClientes = new javax.swing.JTable();
         jButtonExcluir = new javax.swing.JButton();
         jButtonSelecionar = new javax.swing.JButton();
+        jButtonFechar = new javax.swing.JButton();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -133,6 +132,7 @@ public class GerenciarClienteGUI extends javax.swing.JFrame {
         jScrollPane1.setViewportView(jTable1);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Gerenciar Clientes");
         setResizable(false);
 
         jLabelNome.setText("Nome");
@@ -204,6 +204,13 @@ public class GerenciarClienteGUI extends javax.swing.JFrame {
             }
         });
 
+        jButtonFechar.setText("Fechar");
+        jButtonFechar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonFecharActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -253,7 +260,8 @@ public class GerenciarClienteGUI extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jSeparator1, javax.swing.GroupLayout.DEFAULT_SIZE, 1, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jButtonFechar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jButtonExcluir)
                         .addGap(23, 23, 23)
                         .addComponent(jButtonSelecionar)
@@ -297,9 +305,11 @@ public class GerenciarClienteGUI extends javax.swing.JFrame {
                     .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 387, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButtonExcluir)
-                    .addComponent(jButtonSelecionar))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jButtonExcluir)
+                        .addComponent(jButtonSelecionar))
+                    .addComponent(jButtonFechar))
                 .addGap(11, 11, 11))
         );
 
@@ -334,6 +344,7 @@ public class GerenciarClienteGUI extends javax.swing.JFrame {
                     controller.excluir(cliente);
                     this.listaClientes.remove(indexSelectedRow);
                     this.atualizarTabela();
+
                 } catch (PersistenceException e) {
                     JOptionPane.showMessageDialog(this, e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
                 }
@@ -370,44 +381,15 @@ public class GerenciarClienteGUI extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButtonSalvarActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(GerenciarClienteGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(GerenciarClienteGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(GerenciarClienteGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(GerenciarClienteGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
+    private void jButtonFecharActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonFecharActionPerformed
+        this.setVisible(false);
+    }//GEN-LAST:event_jButtonFecharActionPerformed
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new GerenciarClienteGUI().setVisible(true);
-            }
-        });
-    }
-
+ 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonCancelar;
     private javax.swing.JButton jButtonExcluir;
+    private javax.swing.JButton jButtonFechar;
     private javax.swing.JButton jButtonSalvar;
     private javax.swing.JButton jButtonSelecionar;
     private javax.swing.JComboBox<String> jComboBoxCurso;

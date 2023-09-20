@@ -10,14 +10,12 @@ public class ItemCompra {
         produto = new Produto();
         preco = 0;
         id = 0;
-        quantidade = 0;
     }
 
-    public ItemCompra(int id, Produto produto, double preco, int quantidade) {
+    public ItemCompra(int id, Produto produto, double preco) {
         this.id = id;
         this.produto = produto;
         this.preco = preco;
-        this.quantidade = quantidade;
     }
     
     public Produto getProduto() {
@@ -42,13 +40,5 @@ public class ItemCompra {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public int getQuantidade() {
-        return quantidade;
-    }
-
-    public void setQuantidade(int quantidade) {
-        this.quantidade = quantidade;
     }
 }

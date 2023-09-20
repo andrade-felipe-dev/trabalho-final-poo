@@ -83,7 +83,6 @@ public class ClienteDAO implements InterfaceDAO<Cliente> {
                 String endereco = rs.getString(5);
                 float saldoAtual = rs.getFloat(6);
                 float limiteFiado = rs.getFloat(7);
-                System.out.println(rs.getInt(8));
                 CursoDAO cursoDAO = new CursoDAO(this.con);
                 Curso curso = cursoDAO.buscarPorId(rs.getInt(7));
                 cliente = new Cliente(id, nome, telefone, email, endereco, saldoAtual, limiteFiado, new ArrayList<>(), curso);
@@ -100,7 +99,7 @@ public class ClienteDAO implements InterfaceDAO<Cliente> {
     @Override
     public List<Cliente> buscarTodos() throws PersistenceException {
         try {
-            PreparedStatement ps = this.con.prepareStatement("SELECT id, nome, telefone, email, endereco, saldo_atual, limite_fiado, id_curso FROM clientes;");
+            PreparedStatement ps = this.con.prepareStatement("SELECT id, nome, telefone, email, endereco, saldo_atual, limite_fiado, id_curso FROM clientes ORDER BY nome ASC;");
             ResultSet rs = ps.executeQuery();
             List<Cliente> clientes = new ArrayList<>();
             while (rs.next()) {
@@ -111,7 +110,10 @@ public class ClienteDAO implements InterfaceDAO<Cliente> {
                 String endereco = rs.getString(5);
                 float saldoAtual = rs.getFloat(6);
                 float limiteFiado = rs.getFloat(7);
-                Cliente cliente = new Cliente(id, nome, telefone, email, endereco, saldoAtual, limiteFiado,new ArrayList<>(), new Curso());
+                CursoDAO cursoDAO = new CursoDAO(this.con);
+                Curso curso = cursoDAO.buscarPorId(rs.getInt(8));
+                
+                Cliente cliente = new Cliente(id, nome, telefone, email, endereco, saldoAtual, limiteFiado,new ArrayList<>(), curso);
                 clientes.add(cliente);
             }
             rs.close();

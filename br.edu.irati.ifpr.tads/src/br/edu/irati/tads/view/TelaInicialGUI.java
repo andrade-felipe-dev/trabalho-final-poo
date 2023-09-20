@@ -29,19 +29,46 @@ public class TelaInicialGUI extends javax.swing.JFrame {
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenuGerenciarCliente = new javax.swing.JMenu();
         jMenuGerenciarCompra = new javax.swing.JMenu();
-        jMenuGerenciarPagamento = new javax.swing.JMenu();
+        jMenu1 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("SisCoxinha");
+        setResizable(false);
 
         jMenuGerenciarCliente.setText("Gerenciar Clientes");
         jMenuGerenciarCliente.setToolTipText("");
+        jMenuGerenciarCliente.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jMenuGerenciarClienteMouseClicked(evt);
+            }
+        });
+        jMenuGerenciarCliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuGerenciarClienteActionPerformed(evt);
+            }
+        });
         jMenuBar1.add(jMenuGerenciarCliente);
 
-        jMenuGerenciarCompra.setText("Gerenciar Compras");
+        jMenuGerenciarCompra.setText("Lançar Compra");
+        jMenuGerenciarCompra.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jMenuGerenciarCompraMouseClicked(evt);
+            }
+        });
+        jMenuGerenciarCompra.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuGerenciarCompraActionPerformed(evt);
+            }
+        });
         jMenuBar1.add(jMenuGerenciarCompra);
 
-        jMenuGerenciarPagamento.setText("Gerenciar Pagamento");
-        jMenuBar1.add(jMenuGerenciarPagamento);
+        jMenu1.setText("Gerenciar Compra");
+        jMenu1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jMenu1MouseClicked(evt);
+            }
+        });
+        jMenuBar1.add(jMenu1);
 
         setJMenuBar(jMenuBar1);
 
@@ -49,44 +76,44 @@ public class TelaInicialGUI extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 450, Short.MAX_VALUE)
+            .addGap(0, 400, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 276, Short.MAX_VALUE)
+            .addGap(0, 292, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jMenuGerenciarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuGerenciarClienteActionPerformed
+        GerenciarClienteGUI gerenciarClienteGUI = new GerenciarClienteGUI();
+        gerenciarClienteGUI.setVisible(true);
+    }//GEN-LAST:event_jMenuGerenciarClienteActionPerformed
+
+    private void jMenuGerenciarCompraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuGerenciarCompraActionPerformed
+        
+    }//GEN-LAST:event_jMenuGerenciarCompraActionPerformed
+
+    private void jMenuGerenciarClienteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuGerenciarClienteMouseClicked
+        GerenciarClienteGUI gerenciarClienteGUI = new GerenciarClienteGUI();
+        gerenciarClienteGUI.setVisible(true);
+    }//GEN-LAST:event_jMenuGerenciarClienteMouseClicked
+
+    private void jMenu1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu1MouseClicked
+        GerenciarCompraGUI gerenciarCompraGUI = new GerenciarCompraGUI();
+        gerenciarCompraGUI.setVisible(true);
+    }//GEN-LAST:event_jMenu1MouseClicked
+
+    private void jMenuGerenciarCompraMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuGerenciarCompraMouseClicked
+        LancarCompraGUI lancarCompraGUI = new LancarCompraGUI();
+        lancarCompraGUI.setVisible(true);
+    }//GEN-LAST:event_jMenuGerenciarCompraMouseClicked
+
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(TelaInicialGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(TelaInicialGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(TelaInicialGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(TelaInicialGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new TelaInicialGUI().setVisible(true);
@@ -95,9 +122,9 @@ public class TelaInicialGUI extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenu jMenuGerenciarCliente;
     private javax.swing.JMenu jMenuGerenciarCompra;
-    private javax.swing.JMenu jMenuGerenciarPagamento;
     // End of variables declaration//GEN-END:variables
 }

@@ -26,6 +26,7 @@ public class CursoController {
         return listaNome;
     }
     
+    
     public Curso buscarCursoPorNome(String nome) throws PersistenceException {
         Connection con = Conectar.get();
         CursoDAO cursoDAO = new CursoDAO(con);

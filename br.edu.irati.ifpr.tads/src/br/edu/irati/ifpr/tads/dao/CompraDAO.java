@@ -87,7 +87,7 @@ public class CompraDAO {
     
     public List<Compra> buscarTodos() throws PersistenceException {
         try {
-            PreparedStatement ps = this.con.prepareStatement("SELECT id, data_hora, estado, id_cliente FROM compras");
+            PreparedStatement ps = this.con.prepareStatement("SELECT id, data_hora, estado, id_cliente FROM compras ORDER BY estado ASC");
             ResultSet rs = ps.executeQuery();
             List<Compra> listaCompras = new ArrayList<>();
             while (rs.next()) {
@@ -99,7 +99,7 @@ public class CompraDAO {
                 Cliente cliente = clienteDAO.buscarPorId(rs.getInt(4));
                 compra.setId(id);
                 compra.setDataHora(dataHora);
-                compra.setEstado(estado.equals(CompraEstadoENUM.PENDENTE) ? CompraEstadoENUM.PENDENTE : CompraEstadoENUM.PAGO);
+                compra.setEstado("PENDENTE".equals(estado) ? CompraEstadoENUM.PENDENTE : CompraEstadoENUM.PAGO);
                 compra.setCliente(cliente);
                 
                 listaCompras.add(compra);
@@ -142,13 +142,26 @@ public class CompraDAO {
         }
     }
     
-    public void alterarParaNuloIdPagamento (int idPagamento) throws PersistenceException {
+    public void adicionarPagamentoACompra(Pagamento pagamento, Compra compra) throws PersistenceException {
         try {
-            PreparedStatement ps = this.con.prepareStatement("UPDATE compras SET id_pagamento = NULL WHERE id_pagamento = ?;");
-            ps.setInt(1, idPagamento);
+            PreparedStatement ps = this.con.prepareStatement("UPDATE compras SET id_pagamento = ?, estado = 'PAGO' WHERE id = ?;");
+            ps.setInt(1, pagamento.getId());
+            ps.setInt(2, compra.getId());
+            ps.execute();
+            ps.close();
+        } catch (SQLException e) {
+            throw new PersistenceException(e.getMessage());
+        }
+    }
+    
+    public void desvincularPagamento (Compra compra) throws PersistenceException {
+        try {
+            PreparedStatement ps = this.con.prepareStatement("UPDATE compras SET id_pagamento = NULL WHERE id = ?;");
+            ps.setInt(1, compra.getId());
             ps.execute();
             ps.close();
         } catch(SQLException e) {
+            System.out.println("Desvincular Pagamento" + e.getMessage());
             throw new PersistenceException(e.getMessage());
         }
     }

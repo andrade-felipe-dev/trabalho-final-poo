@@ -82,6 +82,31 @@ public class ProdutoDAO implements InterfaceDAO<Produto> {
             throw new PersistenceException(ex.getMessage());
         }
     }
+    
+    public Produto buscarPorNome(String nome) throws PersistenceException {
+        try {
+            PreparedStatement ps = this.con.prepareStatement("SELECT id, nome, descricao, preco FROM produtos WHERE nome = ?");
+            ps.setString(1, nome);
+            ResultSet rs = ps.executeQuery();
+            Produto produto = new Produto();
+            if (rs.next()) {
+                int id = rs.getInt(1);
+                nome = rs.getString(2);
+                String descricao = rs.getString(3);
+                Double preco = rs.getDouble(4);
+                produto.setId(id);
+                produto.setNome(nome);
+                produto.setDescricao(descricao);
+                produto.setPreco(preco);
+            }
+            rs.close();
+            ps.close();
+                
+            return produto;
+        } catch (SQLException ex) {
+            throw new PersistenceException(ex.getMessage());
+        }
+    }
 
     @Override
     public List<Produto> buscarTodos() throws PersistenceException {

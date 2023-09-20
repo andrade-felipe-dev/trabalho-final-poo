@@ -5,9 +5,11 @@ import br.edu.irati.ifpr.tads.dao.CursoDAO;
 import br.edu.irati.ifpr.tads.exception.PersistenceException;
 import br.edu.irati.ifpr.tads.external.Conectar;
 import br.edu.irati.ifpr.tads.model.Cliente;
+import br.edu.irati.ifpr.tads.model.Compra;
 import br.edu.irati.ifpr.tads.model.Curso;
 import java.util.List;
 import java.sql.*;
+import java.util.ArrayList;
 
 public class ClienteController {
     public void salvar(Cliente cliente) throws PersistenceException {
@@ -46,5 +48,14 @@ public class ClienteController {
         ClienteDAO clienteDAO = new ClienteDAO(con);
         clienteDAO.excluir(cliente);
         Conectar.offConection(con);
+    }
+    
+    public List<String> formatarClienteIdNomeEndereco(List<Cliente> listaCliente) {
+        List<String> listaNome = new ArrayList<>();
+        for (Cliente cliente : listaCliente) {
+            String idNomeEndereco = cliente.getId() + "-" + cliente.getNome() + "-" + cliente.getEndereco();
+            listaNome.add(idNomeEndereco);
+        }
+        return listaNome;
     }
 }
